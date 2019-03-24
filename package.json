@@ -1,0 +1,32 @@
+{
+  "name": "modulo1",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest",
+    "react-devtools": "react-devtools"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.4.0",
+    "prop-types": "^15.7.2",
+    "react": "16.6.0-alpha.8af6728",
+    "react-native": "0.57.1",
+    "react-native-view-overflow": "^0.0.4",
+    "react-navigation": "^3.5.1",
+    "reactotron-react-native": "^3.2.1",
+    "schedule": "0.4.0"
+  },
+  "devDependencies": {
+    "babel-jest": "24.5.0",
+    "babel-plugin-root-import": "^6.1.0",
+    "jest": "24.5.0",
+    "metro-react-native-babel-preset": "0.53.1",
+    "react-devtools": "^3.6.1",
+    "react-native-gesture-handler": "1.0.16",
+    "react-test-renderer": "16.6.0-alpha.8af6728"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}
