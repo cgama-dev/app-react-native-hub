@@ -1,30 +1,30 @@
 import './config/ReactotronConfig'
 import './config/DevToolsConfig'
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Button, Platform } from 'react-native';
-import Todo from './components/Todo'
-import Routes from './routes'
+import { StyleSheet, AsyncStorage } from 'react-native';
+import createNavigation from './routes'
 
 export default class App extends Component {
-
     state = {
-        todos: [
-            { id: 1, text: 'Beber água' }
-        ]
+        userChecked: false,
+        userLogged: false
     }
+    async componentDidMount() {
+        const username = await AsyncStorage.getItem('@Githun:username')
 
-    handleAddTodo = () => {
-
-        const todos = [...this.state.todos, { id: Math.random(), text: "Novo" }]
-
-        console.tron.log(todos)
-        this.setState({ todos })
-
+        this.setState({
+            userChecked: true,
+            userLogged: !!username
+        })
     }
     render() {
-        return (
-            <Routes />
-        );
+        const { userChecked, userLogged } = this.state
+        if (!userChecked) return null
+
+        const Routes = createNavigation(userLogged)
+
+        return <Routes />
+
     }
 }
 
