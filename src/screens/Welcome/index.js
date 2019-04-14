@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput, TouchableOpacity, AsyncStorage, ActivityIndicator } from 'react-native';
+import PropTypes from 'prop-types'
 import styles from './styles'
 import api from './../../services/api'
 class Welcome extends Component {
-
 
     state = {
         username: '',
@@ -30,7 +30,7 @@ class Welcome extends Component {
             await this.verifyUserExists(username)
             await this.saveUser(username)
 
-            navigation.navigate('Respositories')
+            navigation.navigate('User')
         } catch (e) {
             this.setState({ isLoading: false, isError: true })
             console.tron.log('Usuário não existe')
