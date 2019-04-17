@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { Text, View, AsyncStorage, ActivityIndicator } from 'react-native';
+import { Text, View, AsyncStorage, ActivityIndicator, FlatList } from 'react-native';
 import Header from './../../components/Header'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import api from './../../services/api'
 import styles from './styles';
+import RepositoryItem from './RepositoryItem'
 
 class Repositories extends Component {
 
@@ -25,14 +26,23 @@ class Repositories extends Component {
         this.setState({ data, loading: false })
     }
 
+    handleListItem = ({ item }) => <RepositoryItem repository={item} />
+
     handleList = () => {
-        return this.state.data.map((repo) => <Text key={repo.id}>{repo.name}</Text>)
+        const { data } = this.state
+
+        return (<FlatList
+            data={data}
+            keyExtractor={item => String(item.id)}
+            renderItem={this.handleListItem}
+        />)
+        // return data.map((repo) => <Text key={repo.id}>{repo.name}</Text>)
     }
 
     render() {
         const { loading } = this.state
         return (
-            <View>
+            <View style={styles.container}>
                 <Header title='Repositórios' />
                 {
                     loading ? <ActivityIndicator style={styles.loading} /> : this.handleList()
