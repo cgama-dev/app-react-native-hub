@@ -15,28 +15,37 @@ class Repositories extends Component {
     state = {
         username: '',
         loading: true,
-        data: []
+        data: [],
+        refreshing:false
     }
 
     async componentDidMount() {
-        const username = await AsyncStorage.getItem('@Githun:username')
-
-        const { data } = await api.get(`/users/${username}/repos`)
-
-        this.setState({ data, loading: false })
+        await this.loadRepositories()
     }
 
     handleListItem = ({ item }) => <RepositoryItem repository={item} />
 
+    loadRepositories = async () => {
+
+        this.setState({ refreshing: true })
+
+        const username = await AsyncStorage.getItem('@Githun:username')
+
+        const { data } = await api.get(`/users/${username}/repos`)
+
+        this.setState({ data, loading: false, refreshing: false })
+    }
+
     handleList = () => {
-        const { data } = this.state
+        const { data, refreshing } = this.state
 
         return (<FlatList
             data={data}
             keyExtractor={item => String(item.id)}
             renderItem={this.handleListItem}
+            onRefresh={this.loadRepositories}
+            refreshing={refreshing}
         />)
-        // return data.map((repo) => <Text key={repo.id}>{repo.name}</Text>)
     }
 
     render() {
